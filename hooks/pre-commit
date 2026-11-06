@@ -9,3 +9,12 @@ if [ $? -ne 0 ]; then
   echo "Las pruebas fallaron: commit cancelado."
   exit 1
 fi
+echo "Comprobando la extension antes del commit..."
+"$PY" verificar_extension.py
+if [ $? -ne 0 ]; then
+  echo "Extension invalida: commit cancelado."
+  exit 1
+fi
+"$PY" -c 'from pathlib import Path; import sys; sys.exit(0 if list(Path("extension/agents").glob("*.md")) else "Falta el agente propio: commit cancelado.")'
+if [ $? -ne 0 ]; then exit 1; fi
+echo "Controles aprobados."
