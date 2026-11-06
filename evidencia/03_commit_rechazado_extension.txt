@@ -1,0 +1,12 @@
+$ /Users/yero/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback/git commit -am test: intento con manifiesto invalido
+Ejecutando las pruebas antes del commit...
+........                                                                 [100%]
+8 passed in 1.18s
+Comprobando la extension antes del commit...
+OK   manifiesto: control-datos-credito
+OK   comando: /control-datos-credito:resumir-datos
+OK   agente: revisor-de-controles
+FALTA plugin.json: falta `description`
+Extension invalida: commit cancelado.
+
+Codigo de salida: 1

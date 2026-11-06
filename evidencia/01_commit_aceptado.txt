@@ -1,0 +1,14 @@
+$ /Users/yero/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback/git commit -m feat: verificar extension y agente en el hook
+Ejecutando las pruebas antes del commit...
+........                                                                 [100%]
+8 passed in 2.21s
+Comprobando la extension antes del commit...
+OK   manifiesto: control-datos-credito
+OK   comando: /control-datos-credito:resumir-datos
+OK   agente: revisor-de-controles
+La extensión tiene una estructura válida.
+Controles aprobados.
+[main 49e1550] feat: verificar extension y agente en el hook
+ 1 file changed, 9 insertions(+)
+
+Codigo de salida: 0

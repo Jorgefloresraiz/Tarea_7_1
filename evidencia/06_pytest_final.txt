@@ -1,0 +1,5 @@
+$ /Users/yero/Downloads/Tarea_7_1/.venv/bin/python -m pytest -q
+........                                                                 [100%]
+8 passed in 1.39s
+
+Codigo de salida: 0

@@ -1,0 +1,30 @@
+$ /Users/yero/Downloads/Tarea_7_1/.venv/bin/python instalar_hook.py
+Hook instalado: ahora las pruebas se ejecutan antes de cada commit.
+
+Salida: 0
+$ /Users/yero/Downloads/Tarea_7_1/.venv/bin/python tareas.py resumir
+{
+  "filas": 1000,
+  "columnas": 21,
+  "nulos": 0,
+  "duplicados": 0,
+  "clases": {
+    "bad": 300,
+    "good": 700
+  },
+  "sha256": "82b9757965557e2318d267100d13283da961497a36938d1a384dea716a68f6f2"
+}
+
+Salida: 0
+$ /Users/yero/Downloads/Tarea_7_1/.venv/bin/python verificar_extension.py
+OK   manifiesto: control-datos-credito
+OK   comando: /control-datos-credito:resumir-datos
+OK   agente: revisor-de-controles
+La extensión tiene una estructura válida.
+
+Salida: 0
+$ /Users/yero/Downloads/Tarea_7_1/.venv/bin/python -m pytest -q -p no:cacheprovider
+........                                                                 [100%]
+8 passed in 1.27s
+
+Salida: 0

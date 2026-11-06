@@ -1,0 +1,4 @@
+$ /Users/yero/Downloads/Tarea_7_1/.venv/bin/python instalar_hook.py
+Hook instalado: ahora las pruebas se ejecutan antes de cada commit.
+
+Codigo de salida: 0

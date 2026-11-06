@@ -1,0 +1,4 @@
+$ /Users/yero/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback/git status --short
+?? evidencia/
+
+Codigo de salida: 0

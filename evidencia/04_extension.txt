@@ -1,0 +1,7 @@
+$ /Users/yero/Downloads/Tarea_7_1/.venv/bin/python verificar_extension.py
+OK   manifiesto: control-datos-credito
+OK   comando: /control-datos-credito:resumir-datos
+OK   agente: revisor-de-controles
+La extensión tiene una estructura válida.
+
+Codigo de salida: 0

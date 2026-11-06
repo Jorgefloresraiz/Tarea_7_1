@@ -1,0 +1,14 @@
+$ /Users/yero/Downloads/Tarea_7_1/.venv/bin/python tareas.py resumir
+{
+  "filas": 1000,
+  "columnas": 21,
+  "nulos": 0,
+  "duplicados": 0,
+  "clases": {
+    "bad": 300,
+    "good": 700
+  },
+  "sha256": "82b9757965557e2318d267100d13283da961497a36938d1a384dea716a68f6f2"
+}
+
+Codigo de salida: 0

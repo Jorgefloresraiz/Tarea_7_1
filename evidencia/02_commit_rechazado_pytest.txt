@@ -1,0 +1,18 @@
+$ /Users/yero/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback/git commit -am test: intento con umbral incorrecto
+Ejecutando las pruebas antes del commit...
+...F....                                                                 [100%]
+=================================== FAILURES ===================================
+________________ test_explicacion_segura_solo_cita_lo_permitido ________________
+tests/test_hibrido.py:29: in test_explicacion_segura_solo_cita_lo_permitido
+    assert verificar_explicacion(texto, DATOS, 0.78) == []         # el texto de respaldo siempre pasa
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: assert ['dice que el...idad es baja'] == []
+E     
+E     Left contains one more item: 'dice que el riesgo es alto, pero la probabilidad es baja'
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_hibrido.py::test_explicacion_segura_solo_cita_lo_permitido
+1 failed, 7 passed in 1.34s
+Las pruebas fallaron: commit cancelado.
+
+Codigo de salida: 1

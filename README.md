@@ -1,45 +1,85 @@
-# Demo Clase 7 · Aplicación híbrida: un modelo predictivo y un modelo de lenguaje
+# Tarea 7.1 — Automatización y extensión del entorno
 
-Un Random Forest (el de la Clase 6) predice la probabilidad de que un crédito sea malo. Un modelo de lenguaje
-pequeño redacta la explicación. Una capa de verificación comprueba que el texto no afirme nada que el modelo no
-sustente, y si falla, se muestra un texto de respaldo armado solo con datos. Esta es la versión **incompleta**: los bloques `TODO` se escriben en clase.
+Jorge Josué Flores González · MAI 540 · Atlantis University
 
-## Instalación
+Extiende el kit docente `Demo_Hibrido_incompleto` con el comando `resumir`, un
+hook pre-commit y el plugin `control-datos-credito`. Conserva el kit original en
+el primer commit. Los bloques de práctica están implementados; la evidencia de
+esta entrega corresponde a la automatización, al predictor y a la verificación.
+No se ejecutó el modelo de lenguaje Qwen ni se presenta una prueba generativa.
 
-Requiere Python 3.10 a 3.12 (en Mac con chip Intel, Python 3.12). Con el entorno virtual activo:
+## Reproducción
+
+Python 3.12 y Git. Desde la raíz del repositorio:
 
 ```bash
-pip install -r requirements.txt
-python probar_modelo.py      # comprueba que el modelo de lenguaje descarga y responde
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements-automatizacion.txt
+python instalar_hook.py
+python tareas.py resumir
+python tareas.py probar
+python verificar_extension.py
 ```
 
-## Qué hay en cada archivo
+En Windows se activa con `.venv\Scripts\Activate.ps1`. El hook se debe instalar
+en cada clon; Git no distribuye `.git/hooks`. Para el componente generativo del
+kit se necesitan además las dependencias de `requirements.txt` y la descarga de
+Qwen. Esa ejecución no forma parte de la evidencia de Tarea 7.1.
 
-| Archivo | Qué hace |
+## Comando propio
+
+`python tareas.py resumir` informa filas, columnas, clases, nulos, duplicados y
+SHA-256 del CSV, sin entrenar ni cambiar datos. Reduce la repetición del perfilado
+manual. El hash permite comparar versiones, pero no certifica autenticidad ni
+ausencia de sesgo. Resultado: 1,000 filas, 21 columnas, 700 good y 300 bad; cero
+nulos y duplicados. El conjunto es el German Credit suministrado en clase.
+
+## Hook y demostraciones
+
+El hook ejecuta pytest y, si pasa, `verificar_extension.py` y una comprobación de
+presencia del agente propio. Un código distinto de cero cancela el commit.
+
+| Registro en evidencia/ | Resultado real |
 |---|---|
-| `datos.py` | Lee German Credit y traduce una solicitud a datos legibles |
-| `predictor.py` | El modelo predictivo (Random Forest) y la probabilidad de crédito malo |
-| `red_neuronal.py` | Una red neuronal sencilla: capas y pesos |
-| `explicador.py` | El modelo de lenguaje que redacta la explicación |
-| `verificador.py` | Las verificaciones y el texto de respaldo |
-| `main.py` | Ejecuta la aplicación completa sobre seis solicitudes |
-| `tareas.py` | Comandos reutilizables: `evaluar`, `auditar` y `probar` |
-| `hooks/pre-commit` y `instalar_hook.py` | La automatización: pruebas antes de cada commit |
-| `tests/test_hibrido.py` | Pruebas automáticas |
-| `verificar.py` | Comprueba un bloque: `python verificar.py <número de TODO>` |
-| `verificar_extension.py` | Comprueba la estructura de la extensión: `python verificar_extension.py` |
+| 01_commit_aceptado.txt | 8 pruebas pasan; commit 49e1550 aceptado |
+| 02_commit_rechazado_pytest.txt | Umbral 0.30 cambiado a 0.99; 1 falla y 7 pasan; commit rechazado |
+| 03_commit_rechazado_extension.txt | Sin description en manifiesto; pytest pasa y extensión bloquea el commit |
+| 04_extension.txt | Manifiesto, comando y agente válidos |
+| 05_resumen.txt | Perfil y hash del CSV |
+| 06_pytest_final.txt | Código restaurado; 8 pruebas pasan |
+| 09_reproduccion_limpia.txt | Mismos controles desde un clon limpio usando el entorno Python ya instalado |
 
-## Cómo se completa
+Las capturas muestran estos registros originales en la terminal de VS Code;
+no son terminales recreadas. Los archivos alterados se restauraron y HEAD no
+cambió en los dos intentos rechazados. Para reproducir los fallos, modificar
+solo los elementos indicados, intentar el commit y restaurarlos inmediatamente.
 
-Cada `TODO n` marca un bloque que se escribe en clase. Para verificar cada paso:
+## Extensión
 
-```bash
-python verificar.py 1     # cambia el número para cada bloque
-python main.py            # cuando estén todos los bloques
-pytest -v                 # con los TODO 10 y 11
-```
-La versión terminada está en `Demo_Hibrido_completo/`.
+- `extension/.claude-plugin/plugin.json`: manifiesto y versión.
+- `commands/resumir-datos.md`: ejecuta el perfil y solicita una interpretación breve.
+- `agents/revisor-de-controles.md`: revisión de cobertura por archivo/línea, con
+  herramientas de lectura; no modifica archivos ni ejecuta órdenes.
 
-## La extensión (plugin)
+La validación estructural se ejecutó sin líneas FALTA. La prueba conversacional
+no se realizó: Claude Code no disponía de sesión autenticada durante la revisión.
+Con una sesión activa se carga con `claude --plugin-dir extension` y se invoca
+`/control-datos-credito:resumir-datos`; después se solicita al agente
+`revisor-de-controles` revisar la cobertura del hook.
 
-Un plugin es una carpeta que empaqueta comandos y agentes para reutilizarlos en otro proyecto. Se arma en el paso 23 del instructivo y se comprueba con `python verificar_extension.py`. Con Claude Code se carga con `claude --plugin-dir extension` y sus comandos aparecen como `/auditoria-hibrida:auditar` y `/auditoria-hibrida:probar`.
+## Riesgos y límites
+
+El comando no detecta fuga de información ni asegura representatividad. El hook
+no protege cuando se omite con `--no-verify`, no está instalado o una regla no
+tiene pruebas. Comprueba el directorio de trabajo, no una exportación aislada del
+índice: preparar cambios parciales exige revisar `git diff --cached`. La extensión
+uniforma instrucciones, pero pasar el verificador no certifica la calidad de una
+respuesta del agente ni la seguridad completa del modelo. No debe emplearse la
+demostración para conceder o denegar créditos reales.
+
+## Referencias
+
+Atlantis University. (2026). *Tarea 7.1: Automatización y extensión del entorno* [Consigna de curso].
+
+Git. (s. f.). *githooks*. https://git-scm.com/docs/githooks
