@@ -36,7 +36,14 @@ def probar():
     sys.exit(subprocess.call([sys.executable, "-m", "pytest", "-q"]))
 
 
-COMANDOS = {"evaluar": evaluar, "auditar": auditar, "probar": probar}
+def resumir():
+    """Informa dimensiones, clases, nulos, duplicados y hash del CSV."""
+    import json
+    from resumen_datos import resumir as perfil
+    print(json.dumps(perfil(), ensure_ascii=False, indent=2))
+
+
+COMANDOS = {"resumir": resumir, "evaluar": evaluar, "auditar": auditar, "probar": probar}
 
 if __name__ == "__main__":
     if len(sys.argv) != 2 or sys.argv[1] not in COMANDOS:
