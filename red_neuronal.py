@@ -7,11 +7,15 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler  # texto → col
 
 def crear_red(cols_cat, cols_num):
     """Pipeline con la preparación y una red de dos capas ocultas (16 y 8 neuronas)."""
-    # TODO 3 (en clase): preparación (OneHot + escala) y MLPClassifier
-    raise NotImplementedError("TODO 3: completar en clase")
+    prep = ColumnTransformer([
+        ("cat", OneHotEncoder(handle_unknown="ignore"), cols_cat),
+        ("num", StandardScaler(), cols_num)])
+    return Pipeline([("prep", prep), ("red", MLPClassifier(
+        hidden_layer_sizes=(16, 8), activation="relu", max_iter=1000, random_state=42))])
 
 
 def describir_red(red_entrenada):
     """Devuelve las neuronas de cada capa y el total de pesos que la red aprendió."""
-    # TODO 4 (en clase): leer coefs_ e intercepts_ de la red entrenada
-    raise NotImplementedError("TODO 4: completar en clase")
+    mlp = red_entrenada.named_steps["red"]
+    capas = [mlp.coefs_[0].shape[0]] + [c.shape[1] for c in mlp.coefs_]
+    return capas, int(sum(c.size for c in mlp.coefs_) + sum(b.size for b in mlp.intercepts_))

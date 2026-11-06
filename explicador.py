@@ -15,14 +15,23 @@ SISTEMA = ("Eres un asistente de un banco. Explicas en español, en máximo dos 
 
 def cargar_modelo_lenguaje():
     """Descarga (la primera vez) y carga el modelo de lenguaje. Devuelve (tokenizador, modelo)."""
-    # TODO 5 (en clase): from_pretrained del tokenizador y del modelo
-    raise NotImplementedError("TODO 5: completar en clase")
+    tokenizador = AutoTokenizer.from_pretrained(MODELO)
+    modelo = AutoModelForCausalLM.from_pretrained(MODELO, torch_dtype=torch.float32).eval()
+    return tokenizador, modelo
 
 
 def explicar(tokenizador, modelo, datos, prob):
     """Pide al modelo de lenguaje una explicación breve de la probabilidad `prob` para esta solicitud."""
-    # TODO 6 (en clase): armar el mensaje, generar y decodificar
-    raise NotImplementedError("TODO 6: completar en clase")
+    detalle = ", ".join(f"{k}: {v}" for k, v in datos.items())
+    mensajes = [{"role": "system", "content": SISTEMA},
+                {"role": "user", "content": f"Datos: {detalle}. Probabilidad de crédito malo: {prob:.0%}. Explica."}]
+    texto = tokenizador.apply_chat_template(mensajes, tokenize=False, add_generation_prompt=True)
+    entrada = tokenizador(texto, return_tensors="pt")
+    with torch.no_grad():
+        salida = modelo.generate(**entrada, max_new_tokens=70, do_sample=False,
+                                 temperature=None, top_p=None, top_k=None)
+    nuevos = salida[0][entrada["input_ids"].shape[1]:]
+    return tokenizador.decode(nuevos, skip_special_tokens=True).strip()
 
 
 def recortar_a_oracion(texto):

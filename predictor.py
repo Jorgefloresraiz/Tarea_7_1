@@ -11,12 +11,16 @@ from datos import cargar_datos
 def entrenar_predictor():
     """Entrena con el 80% de los casos y devuelve el predictor y el 20% restante (casos que nunca vio)."""
     X, y, cols_cat, cols_num = cargar_datos()
-    # TODO 1 (en clase): separar prueba, armar el Pipeline y entrenar el Random Forest
-    raise NotImplementedError("TODO 1: completar en clase")
+    X_ent, X_pru, y_ent, y_pru = train_test_split(
+        X, y, test_size=0.20, stratify=y, random_state=42)
+    prep = ColumnTransformer([("cat", OrdinalEncoder(
+        handle_unknown="use_encoded_value", unknown_value=-1), cols_cat)], remainder="passthrough")
+    predictor = Pipeline([("prep", prep), ("modelo", RandomForestClassifier(
+        n_estimators=200, random_state=42))]).fit(X_ent, y_ent)
     return predictor, X_pru, y_pru
 
 
 def probabilidad_malo(predictor, X, indice):
     """Probabilidad (entre 0 y 1) de que el crédito de la fila `indice` sea malo, según el modelo."""
-    # TODO 2 (en clase): predict_proba sobre una sola fila
-    raise NotImplementedError("TODO 2: completar en clase")
+    clases = list(predictor.classes_)
+    return float(predictor.predict_proba(X.iloc[[indice]])[0, clases.index(1)])
