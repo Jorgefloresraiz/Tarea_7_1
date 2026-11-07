@@ -62,11 +62,11 @@ solo los elementos indicados, intentar el commit y restaurarlos inmediatamente.
 - `agents/revisor-de-controles.md`: revisión de cobertura por archivo/línea, con
   herramientas de lectura; no modifica archivos ni ejecuta órdenes.
 
-La validación estructural se ejecutó sin líneas FALTA. La prueba conversacional
-no se realizó: Claude Code no disponía de sesión autenticada durante la revisión.
-Con una sesión activa se carga con `claude --plugin-dir extension` y se invoca
-`/control-datos-credito:resumir-datos`; después se solicita al agente
-`revisor-de-controles` revisar la cobertura del hook.
+La validación estructural pasó sin líneas FALTA. Se probaron en Claude Code el comando y el agente con `--plugin-dir extension`; ambas consultas finalizaron con éxito. Las respuestas originales están en `evidencia/10_claude_comando.json` y `11_claude_agente.json`, y su captura en `71_claude.png`.
+
+La revisión humana detectó dos límites: el comando llamó características a las 21 columnas (son 20 predictores y una etiqueta), y el agente cuestionó la evidencia sin consultar los registros conservados. Una respuesta exitosa no implica exactitud de todas sus afirmaciones.
+
+Para repetir: activa el entorno y ejecuta `claude --plugin-dir extension`. Invoca `/control-datos-credito:resumir-datos` y pide al agente `revisor-de-controles` revisar la cobertura del hook.
 
 ## Riesgos y límites
 

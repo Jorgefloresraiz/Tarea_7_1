@@ -1,0 +1,19 @@
+CLAUDE CODE: PRUEBAS REALES DEL PLUGIN
+
+COMANDO /control-datos-credito:resumir-datos
+El dataset contiene **1,000 registros con 21 características** sin problemas de calidad estructural. La distribución de clases muestra un **desbalance moderado con 700 casos "good" (70%) y 300 "bad" (30%)**, típico en datos crediticios, pero manejable en modelado. **No hay nulos ni duplicados**, lo que indica datos limpios; el hash `82b9757...` preserva la reproducibilidad, aunque requiere comparación con una referencia confiable para validar autenticidad.
+
+AGENTE control-datos-credito:revisor-de-controles
+| Control | Evidencia (archivo:línea) | Riesgo no cubierto |
+|---|---|---|
+| Pruebas antes del commit | `hooks/pre-commit:7` ejecuta `pytest -q`; existen `tests/test_hibrido.py` y `tests/test_resumen.py`. Solo hay existencia del código, sin registro de ejecución. | Ejecuta el directorio de trabajo, no los archivos preparados (no aparece `git diff --cached`). |
+| Verificación de la extensión | `hooks/pre-commit:13` llama a `verificar_extension.py:23-55`. | Si `plugin.json` no es un objeto JSON, `datos.get` lanza excepción no controlada. No valida el contenido de `tools`. |
+| Agente propio | `hooks/pre-commit:18` solo comprueba que exista algún `*.md`; `extension/agents/revisor-de-controles.md:2-4` tiene los campos. | El hook no valida campos. `verificar_extension.py` valida campos, pero no exige agentes. |
+| Instalación | `instalar_hook.py:15-16` copia y da permisos sin backup ni verificación; `.git/hooks/pre-commit` tiene el mismo contenido al leerlo (permisos no verificados). | Los clones no traen `.git/hooks`, así que hay que volver a instalar. Sobrescribe en silencio. Ruta relativa: falla fuera de la raíz. |
+| Omisión | El hook no lo impide. | `git commit --no-verify` omite el hook. |
+| Pruebas de los controles | No hay tests para `verificar_extension.py`, `instalar_hook.py` ni el hook. | Los controles mismos carecen de evidencia. |
+| Evidencia de ejecución | `tests/__pycache__/*.pyc` sugiere una corrida previa, pero no es un registro. | No puedo afirmar que las pruebas pasaron. |
+
+**Mejora prioritaria:** ejecutar los controles sobre los archivos preparados (`git diff --cached`) y añadir una comprobación en CI. Justificación: cierra el hueco de código sin preparar y el de `--no-verify`, y no depende de que cada clon instale el hook.
+
+Ambas ejecuciones: success; sin denegaciones de permisos.
