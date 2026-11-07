@@ -1,0 +1,21 @@
+solicitud,indice,probabilidad,rechazo_antes,rechazo_despues,motivos_antes,motivos_despues
+1,30,0.255,True,True,"dice que el riesgo es alto, pero la probabilidad es baja","dice que el riesgo es alto, pero la probabilidad es baja"
+2,128,0.25,False,False,,
+3,289,0.565,False,True,,dato contradictorio: niega el saldo negativo registrado; tono incoherente: riesgo extremo en probabilidad intermedia
+4,216,0.41,False,True,,tono incoherente: riesgo extremo en probabilidad intermedia
+5,966,0.42,True,True,número no sustentado: 100,número no sustentado: 100; tono incoherente: riesgo extremo en probabilidad intermedia
+6,346,0.205,False,False,,
+7,537,0.355,False,True,,tono incoherente: riesgo extremo en probabilidad intermedia
+8,47,0.43,False,True,,dato contradictorio: niega el saldo negativo registrado; tono incoherente: riesgo extremo en probabilidad intermedia
+9,112,0.4,False,False,,
+10,875,0.275,True,True,"dice que el riesgo es alto, pero la probabilidad es baja","dice que el riesgo es alto, pero la probabilidad es baja"
+11,46,0.035,False,False,,
+12,668,0.37,False,True,,tono incoherente: riesgo extremo en probabilidad intermedia
+13,234,0.01,False,False,,
+14,724,0.3,False,False,,
+15,761,0.48,False,True,,dato contradictorio: niega el saldo negativo registrado
+16,430,0.085,True,True,"dice que el riesgo es alto, pero la probabilidad es baja","dice que el riesgo es alto, pero la probabilidad es baja"
+17,187,0.425,False,True,,tono incoherente: riesgo extremo en probabilidad intermedia
+18,259,0.145,True,True,número no sustentado: 60,número no sustentado: 60
+19,571,0.12,True,True,número no sustentado: 76,número no sustentado: 76
+20,681,0.17,True,True,número no sustentado: 50,número no sustentado: 50

@@ -1,0 +1,11 @@
+{
+  "modelo": "Qwen/Qwen2.5-0.5B-Instruct",
+  "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "max_new_tokens": 70,
+  "do_sample": false,
+  "dtype": "float32",
+  "torch_threads": 4,
+  "seleccion": "primeros 20 \u00edndices de prueba, sin seleccionar por resultado",
+  "recorte": "recortar_a_oracion; se conserva texto bruto",
+  "inferencia": "CPU local"
+}

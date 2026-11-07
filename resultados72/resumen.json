@@ -1,0 +1,13 @@
+{
+  "n": 20,
+  "antes": 7,
+  "despues": 14,
+  "correctos_segun_revision": 1,
+  "falsos_positivos_antes": 0,
+  "falsos_positivos_despues": 0,
+  "errores_aceptados_antes": 12,
+  "errores_aceptados_despues": 5,
+  "limite": "Revisión asistida por IA, sin revisor independiente; muestra de desarrollo, no generalización.",
+  "controles_correctos": 6,
+  "falsos_positivos_controles": 0
+}

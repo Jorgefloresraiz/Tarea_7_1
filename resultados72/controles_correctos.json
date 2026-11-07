@@ -1,0 +1,62 @@
+[
+  {
+    "texto": "El riesgo es medio.",
+    "datos": {
+      "cuenta corriente": "saldo entre 0 y 200",
+      "vivienda": "alquilada"
+    },
+    "prob": 0.45,
+    "correcto": true,
+    "rechazos": []
+  },
+  {
+    "texto": "No tiene saldo negativo.",
+    "datos": {
+      "cuenta corriente": "saldo entre 0 y 200",
+      "vivienda": "alquilada"
+    },
+    "prob": 0.45,
+    "correcto": true,
+    "rechazos": []
+  },
+  {
+    "texto": "Su vivienda alquilada consta en los datos.",
+    "datos": {
+      "cuenta corriente": "saldo entre 0 y 200",
+      "vivienda": "alquilada"
+    },
+    "prob": 0.45,
+    "correcto": true,
+    "rechazos": []
+  },
+  {
+    "texto": "El monto es alto y el riesgo medio.",
+    "datos": {
+      "cuenta corriente": "saldo entre 0 y 200",
+      "vivienda": "alquilada"
+    },
+    "prob": 0.45,
+    "correcto": true,
+    "rechazos": []
+  },
+  {
+    "texto": "No es riesgo alto.",
+    "datos": {
+      "cuenta corriente": "saldo entre 0 y 200",
+      "vivienda": "alquilada"
+    },
+    "prob": 0.45,
+    "correcto": true,
+    "rechazos": []
+  },
+  {
+    "texto": "La cuenta tiene saldo entre 0 y 200.",
+    "datos": {
+      "cuenta corriente": "saldo entre 0 y 200",
+      "vivienda": "alquilada"
+    },
+    "prob": 0.45,
+    "correcto": true,
+    "rechazos": []
+  }
+]
