@@ -1,3 +1,9 @@
+# Entrega Tarea 7.2
+
+Esta rama contiene la **Tarea 7.2**. Consultar [README de la 7.2](README_7_2.md), [documentos](documentos72/) y [correspondencia con requisitos](CUMPLIMIENTO_7_2.md). La rama `main` conserva la Tarea 7.1.
+
+---
+
 # Tarea 7.1 — Automatización y extensión del entorno
 
 Jorge Josué Flores González · MAI 540 · Atlantis University
