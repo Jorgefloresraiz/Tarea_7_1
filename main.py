@@ -10,7 +10,7 @@ print("Cargando el modelo de lenguaje (la primera vez se descarga)...")
 tokenizador, modelo = cargar_modelo_lenguaje()
 
 rechazadas = 0
-for i in range(6):                                                # seis solicitudes de prueba
+for i in range(20):                                                # veinte solicitudes de prueba
     datos = datos_legibles(X_pru.iloc[i])                         # datos en español
     prob = probabilidad_malo(predictor, X_pru, i)                 # lo que predice el modelo
     texto = recortar_a_oracion(explicar(tokenizador, modelo, datos, prob))   # lo que redacta (solo frases completas)
@@ -21,4 +21,4 @@ for i in range(6):                                                # seis solicit
     print("Modelo de lenguaje:", texto)
     print("Verificación:", "OK" if not problemas else "; ".join(problemas))
     print("Se muestra:", final)
-print(f"\nExplicaciones rechazadas por la verificación: {rechazadas} de 6")
+print(f"\nExplicaciones rechazadas por la verificación: {rechazadas} de 20")

@@ -34,6 +34,42 @@ def explicacion_segura(datos, prob):
     return f"El modelo estima una probabilidad de {prob:.0%} de que el crédito sea malo (riesgo {nivel}). Datos: {detalle}."
 
 
+def verificar_datos(texto, datos):
+    """Contrasta afirmaciones explícitas de cuenta y vivienda; no infiere causas."""
+    t = texto.lower()
+    problemas = []
+    if 'sin saldo negativo' in t and datos.get('cuenta corriente') == 'saldo negativo':
+        problemas.append('dato contradictorio: niega el saldo negativo registrado')
+    opciones = {'cuenta corriente': ['saldo negativo', 'saldo entre 0 y 200', 'saldo de 200 o más', 'sin cuenta corriente'],
+                'vivienda': ['propia', 'alquilada', 'sin costo']}
+    for campo, valores in opciones.items():
+        for valor in valores:
+            patron = re.escape(valor) if campo == 'cuenta corriente' else r'vivienda\s+' + re.escape(valor)
+            for m in re.finditer(patron, t):
+                # Negaciones simples no afirman que el atributo esté presente.
+                previo = t[max(0, m.start()-25):m.start()]
+                if re.search(r'(?:\bsin\s+|\bno\s+(?:tiene\s+|presenta\s+|es\s+)?(?:un[ao]?\s+)?)$', previo):
+                    continue
+                if datos.get(campo) != valor:
+                    problemas.append(f"dato contradictorio: {campo} afirma '{valor}', dato '{datos.get(campo)}'")
+    return problemas
+
+
+def verificar_tono_medio(texto, prob):
+    """En [30%,60%], detecta extremos expresados explícitamente como riesgo."""
+    if not .30 <= prob <= .60:
+        return []
+    t = texto.lower()
+    patron = r'\b(?:riesgo\s+(?:(?:es|muy|de crédito|crediticio)\s+)*|lo cual es\s+)(alto|bajo|elevado|mínimo)\b'
+    problemas = []
+    for m in re.finditer(patron, t):
+        previo=t[max(0,m.start()-10):m.start()]
+        if re.search(r'\bno\s+(?:es\s+)?$', previo):
+            continue
+        problemas.append('tono incoherente: riesgo extremo en probabilidad intermedia')
+    return problemas
+
+
 def verificar_explicacion(texto, datos, prob):
-    """Reúne todas las verificaciones. Lista vacía = el texto se puede mostrar."""
-    return verificar_numeros(texto, datos, prob) + verificar_tono(texto, prob)
+    return (verificar_numeros(texto, datos, prob) + verificar_tono(texto, prob)
+            + verificar_datos(texto, datos) + verificar_tono_medio(texto, prob))
